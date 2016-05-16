@@ -1,10 +1,10 @@
-FROM centos:latest
+FROM mhart/alpine-node:5.11.1
 
 MAINTAINER Greg Keys <gkeys@mumbacloud.com>
 
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum clean all
-RUN rpm --rebuilddb
-
-RUN yum -y install nodejs npm python-pip git
-RUN pip install awscli awsebcli
+RUN apk --no-cache add --update \
+        python \
+        py-pip \
+    && pip install awscli awsebcli \
+    && rm -rf /var/cache/* /tmp/* /usr/share/man /var/cache/apk/* /root/.npm /root/.node-gyp /root/.gnupg \
+               /usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html
